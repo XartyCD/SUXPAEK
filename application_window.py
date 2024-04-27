@@ -137,6 +137,7 @@ class ApplicationWindow:
             self.label_ticket_info.config(text="Результаты поиска")
         else:
             self.label_ticket_info.config(text="Заявки не найдены")
+            
 
     def remove_edit_buttons(self):
         for button in self.edit_buttons:
@@ -155,4 +156,5 @@ class ApplicationWindow:
     def logout(self):
         self.master.destroy()
         self.root.deiconify()
+
         

@@ -66,6 +66,10 @@ class TicketEditForm:
             "client": self.entry_client.get(),
             "status": self.status_var.get()
         }
+          #добавить удаление старой заявки и замену ее на новую (сейчас добавляется еще одна такая же заявка, но с изменениями, а прошлая остается)
+        self.db.update_ticket(self.ticket_id, ticket_data)
+        self.parent_window.update_ticket_info()
+        self.master.destroy()
 
 
     

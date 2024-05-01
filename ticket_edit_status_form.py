@@ -1,8 +1,6 @@
 import tkinter as tk
 from datetime import datetime
 
-
-
 class TicketEditStatusForm:
     def __init__(self, master, db, ticket_id, parent_window):
         self.master = master

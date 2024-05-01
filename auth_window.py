@@ -8,7 +8,6 @@ import datetime
 
 
 class AuthWindow:
-
     def __init__(self, master):
         self.master = master
         self.master.title("Авторизация")
@@ -23,7 +22,7 @@ class AuthWindow:
         master.geometry("800x560+1100+300")
         master.resizable(False, False)  #Запрет масштабирования окна
 
-        self.img = Image.open("back.jpg") # Создаем изображение
+        self.img = Image.open("authBack.jpg") # Создаем изображение
         self.photo = ImageTk.PhotoImage(self.img)
 
         self.authcontainer = tk.Frame(master, width=570, height=371, highlightbackground="#d46a06", highlightcolor="#d46a06", highlightthickness=4)  # Создаем контейнер с элементами внутри
@@ -86,7 +85,6 @@ class AuthWindow:
 
     def open_application_window(self, username):
         application_window = tk.Toplevel(self.master)
-        application_window.title("Главное окно приложения")
 
         ApplicationWindow(application_window, self.db, username, self.master)
 

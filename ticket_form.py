@@ -8,7 +8,7 @@ class TicketForm:
         self.application_window = application_window
         self.creation_time = creation_time
         
-        self.label_ticket_number = tk.Label(master, text="Заявка №1")
+        self.label_ticket_number = tk.Label(master, text="Заявка №")
         self.label_ticket_number.grid(row=0, column=0, sticky="e")
 
         self.entry_ticket_number = tk.Entry(master)

@@ -42,7 +42,7 @@ class AuthWindow:
         self.label_password = tk.Label(self.authcontainer, text = "Пароль: ", background="gold", font=("Arial", 18))
         self.label_password.pack(pady=(0, 3))
 
-        self.entry_password = tk.Entry(self.authcontainer, show = "*", width=30)
+        self.entry_password = tk.Entry(self.authcontainer, show = "🤐", width=30)
         self.entry_password.pack(pady=(0, 1))
 
         self.show_password_var = tk.BooleanVar()
@@ -74,14 +74,16 @@ class AuthWindow:
                 self.open_special_window(username)
             else:
                 self.open_application_window(username)
+        elif (username == "" and password == ""):
+            messagebox.showerror("ОДУМАЙТЕСЬ!", "Товарищ! Вы забыли ввести свои данные!")
         else:
-            messagebox.showerror("ВАС ИЗГНАЛИ", "Неверное имя пользователя или пароль")
+            messagebox.showerror("ВЫ АРЕСТОВАНЫ!", "Введененные вами данные не соответствуют сводкам КГБ")
 
     def toggle_password_visibility(self):
         if self.show_password_var.get():
             self.entry_password.config(show="")
         else:
-            self.entry_password.config(show="*")
+            self.entry_password.config(show="🤐")
 
     def open_application_window(self, username):
         application_window = tk.Toplevel(self.master)

@@ -38,7 +38,7 @@ class TicketEditForm:
         self.entry_problem_description.insert(tk.END, self.ticket_data[4])
         self.entry_problem_description.grid(row=3, column=1)
 
-        self.label_client = tk.Label(master, text="Клиент:")
+        self.label_client = tk.Label(master, text="Товарищ:")
         self.label_client.grid(row=4, column=0, sticky="e")
 
         self.entry_client = tk.Entry(master)

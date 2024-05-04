@@ -41,7 +41,7 @@ class SpecialWindow:
     def display_tickets(self, tickets):
         for ticket in tickets:
             # Создаем виджеты для отображения информации о заявке
-            ticket_info = f"Заявка №: {ticket[1]}\nОборудование: {ticket[2]}\nТип неисправности: {ticket[3]}\nОписание проблемы: {ticket[4]}\nКлиент: {ticket[5]}\nСтатус: {ticket[6]}\nДата и время создания: {ticket[7]}"
+            ticket_info = f"Заявка №: {ticket[1]}\nОборудование: {ticket[2]}\nТип неисправности: {ticket[3]}\nОписание проблемы: {ticket[4]}\nТоварищ: {ticket[5]}\nСтатус: {ticket[6]}\nДата и время создания: {ticket[7]}"
             if ticket[8]:  # Проверяем, есть ли дата выполнения заявки
                 ticket_info += f"\nДата выполнения: {ticket[8]}"
             label = tk.Label(self.master, text=ticket_info)

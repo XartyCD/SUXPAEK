@@ -17,7 +17,7 @@ def create_statistics_window(db):
     update_datetime
 
     tree_tickets = ttk.Treeview(statistics_window)
-    tree_tickets["columns"] = ("ID", "Оборудование", "Тип неисправности", "Описание", "Клиент", "Статус", "Создание", "Выполнение", "Время выполнения")
+    tree_tickets["columns"] = ("ID", "Оборудование", "Тип неисправности", "Описание", "Товарищ", "Статус", "Создание", "Выполнение", "Время выполнения")
     tree_tickets.heading("#0", text="№")
     tree_tickets.column("#0", anchor="w", width=50)
     for col in tree_tickets["columns"]:

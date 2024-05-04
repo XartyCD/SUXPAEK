@@ -2,11 +2,10 @@ import tkinter as tk
 import datetime
 
 class TicketForm:
-    def __init__(self, master, db, application_window, creation_time=None):
+    def __init__(self, master, db, application_window):
         self.master = master
         self.db = db
         self.application_window = application_window
-        self.creation_time = creation_time
         
         self.label_ticket_number = tk.Label(master, text="Заявка №")
         self.label_ticket_number.grid(row=0, column=0, sticky="e")
@@ -32,7 +31,7 @@ class TicketForm:
         self.entry_problem_description = tk.Entry(master)
         self.entry_problem_description.grid(row=3, column=1)
 
-        self.label_client = tk.Label(master, text="Клиент")
+        self.label_client = tk.Label(master, text="Товарищ")
         self.label_client.grid(row=4, column=0, sticky="e")
 
         self.entry_client = tk.Entry(master)
@@ -53,8 +52,8 @@ class TicketForm:
 
     def submit(self):
 
-        created_at = self.creation_time.strftime('') if self.creation_time else datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-
+        created_at = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+        print(created_at)
         ticket_data = {
             "ticket_number": self.entry_ticket_number.get(),
             "equipment": self.entry_equipment.get(),

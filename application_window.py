@@ -46,23 +46,24 @@ class ApplicationWindow:
         self.btn_statistics = tk.Button(self.navigate_frame, text="Аналитика", command=self.open_statistics_window, font=("Arial", 14))
         self.btn_statistics.pack(padx=(15, 0), side=tk.LEFT)
 
-        self.search_frame= tk.Frame(master)
-        self.search_frame.pack()
+        self.search_frame= tk.Frame(master, width=230, height=40)
+        self.search_frame.pack(pady=(30, 5))
+        self.search_frame.pack_propagate(False)
 
-        self.search_label = tk.Label(self.search_frame, text="Поиск:")
+        self.search_label = tk.Label(self.search_frame, text="Поиск:", font=("Arial", 12))
         self.search_label.pack(side=tk.LEFT)
 
-        self.search_entry = tk.Entry(self.search_frame)
+        self.search_entry = tk.Entry(self.search_frame, width=28)
         self.search_entry.pack(side=tk.LEFT)
 
-        self.search_button = tk.Button(self.search_frame, text="Найти", command=self.search_tickets)
-        self.search_button.pack(side=tk.LEFT)
+        self.search_entry.bind("<KeyRelease>", self.search_tickets)
 
         self.label_ticket_info = tk.Label(master, text="")
-        self.label_ticket_info.pack()
+        self.label_ticket_info.pack(pady=(10, 0))
 
-        self.canvas = tk.Canvas(master, highlightbackground="yellow", highlightcolor="yellow", highlightthickness=4)
-        self.scrollbar = tk.Scrollbar(master, orient="vertical", command=self.canvas.yview)
+        self.canvas = tk.Canvas(master, width=240, height=390, highlightbackground="yellow", highlightcolor="yellow", highlightthickness=4)
+        self.scrollbar = tk.Scrollbar(self.canvas, orient="vertical", command=self.canvas.yview)
+        self.canvas.pack_propagate(False)
 
         # Создаем фрейм для содержимого
         self.ticketsContainer = tk.Frame(self.canvas)
@@ -70,14 +71,11 @@ class ApplicationWindow:
         # Создаем окно для фрейма в Canvas
         self.canvas.create_window(0, 0, window=self.ticketsContainer, anchor="n")  # Anchor "n" для центрирования по вертикали
 
-        # Привязываем обновление размеров Canvas к обновлению размеров содержимого
-        self.ticketsContainer.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-
         # Привязываем скроллбар к Canvas
         self.canvas.config(yscrollcommand=self.scrollbar.set)
 
         # Упаковываем Canvas и скроллбар
-        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.canvas.pack(pady=(5, 0))
         self.scrollbar.pack(side=tk.RIGHT, fill="y")
 
         self.tickets_lables = []
@@ -119,7 +117,7 @@ class ApplicationWindow:
         self.db.delete_ticket(ticket_id)
         self.update_ticket_info()
 
-    def search_tickets(self):
+    def search_tickets(self, event=None):
         search_query = self.search_entry.get()
         if search_query:
             tickets = self.db.search_tickets(search_query)
@@ -128,7 +126,7 @@ class ApplicationWindow:
             self.update_ticket_info()
 
     def display_search_results(self, tickets):
-        self.ticketsContainer.pack()
+        self.canvas.pack()
         for label in self.tickets_lables:
             label.destroy()
 
@@ -142,7 +140,7 @@ class ApplicationWindow:
             ticket_info = f"Заявка №: {ticket[1]}\nОборудование: {ticket[2]}\nТип неисправности: {ticket[3]}\nОписание проблемы: {ticket[4]}\nТоварищ: {ticket[5]}\nСтатус: {ticket[6]}\nДата и время создания: {ticket[7]}"
             if ticket[8]:
                 ticket_info += f"\nДата и время выполнения: {ticket[8]}"
-            label = tk.Label(self.ticketsContainer, wraplength=160, text=ticket_info)
+            label = tk.Label(self.ticketsContainer, wraplength=210, text=ticket_info)
             label.pack()
             self.tickets_lables.append(label)
 
@@ -155,10 +153,14 @@ class ApplicationWindow:
             self.delete_buttons.append(delete_button)
 
         if tickets:
-            self.label_ticket_info.config(text="Результаты поиска")
+            self.label_ticket_info.config(text="Результаты поиска", font=("Arial", 12))
+            self.canvas.pack(pady=(5, 0))
         else:
-            self.label_ticket_info.config(text="Заявки не найдены")
-            self.ticketsContainer.pack_forget()
+            self.label_ticket_info.config(text="Заявки не найдены", font=("Arial", 12))
+            self.canvas.pack_forget()
+            
+        self.canvas.update_idletasks()
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def update_ticket_info(self):
         for label in self.tickets_lables:
@@ -175,7 +177,7 @@ class ApplicationWindow:
             ticket_info = f"Заявка №: {ticket[1]}\nОборудование: {ticket[2]}\nТип неисправности: {ticket[3]}\nОписание проблемы: {ticket[4]}\nТоварищ: {ticket[5]}\nСтатус: {ticket[6]}\nДата и время создания: {ticket[7]}"
             if ticket[8]:
                 ticket_info += f"\nДата и время выполнения: {ticket[8]}"
-            label = tk.Label(self.ticketsContainer, wraplength=160, text=ticket_info, font=("Arial", 10))
+            label = tk.Label(self.ticketsContainer, wraplength=210, text=ticket_info)
             label.pack()
             self.tickets_lables.append(label)
 
@@ -191,9 +193,11 @@ class ApplicationWindow:
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
         if tickets:
-            self.label_ticket_info.config(text="Результаты поиска")
+            self.label_ticket_info.config(text="Результаты поиска", font=("Arial", 12))
+            self.canvas.pack(pady=(5, 0))
         else:
-            self.label_ticket_info.config(text="Заявки не найдены")
+            self.label_ticket_info.config(text="Заявки не найдены", font=("Arial", 12))
+            self.canvas.pack_forget()
 
     def update_datetime(self):
         current_datetime = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")

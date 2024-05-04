@@ -8,6 +8,7 @@ class TicketEditStatusForm:
         self.ticket_id = ticket_id
         self.parent_window = parent_window
 
+        print(ticket_id)
         self.ticket_data = self.db.get_ticket_by_id(ticket_id)
 
         self.label_status = tk.Label(master, text="Статус:")

@@ -23,13 +23,10 @@ class SpecialWindow:
         self.db = db
         self.current_user = username
 
-        self.logout_image = tk.PhotoImage(file="specLogout.png")
-        self.logout_label = tk.Label(master, width=140, height=40, image=self.logout_image)
-        self.logout_label.bind("<Button-1>", self.logout)
-        self.logout_label.pack(padx=(10, 0), pady=(10, 0), side=tk.LEFT, anchor="nw")
+        
 
-        self.info_frame = tk.Frame(master, width=190, height=50, highlightbackground="#d46a06", highlightcolor="#d46a06", highlightthickness=4)
-        self.info_frame.pack(padx=(0, 10), pady=(10, 0), side=tk.RIGHT, anchor="ne")
+        self.info_frame = tk.Frame(master, highlightbackground="black", highlightcolor="black", highlightthickness=2)
+        self.info_frame.pack(pady=(10, 0), padx=(10, 0), side=tk.LEFT, anchor="nw")
 
         self.label_user_info = tk.Label(self.info_frame, text=f"Приветствуем, Товарищ {self.username}!", wraplength=240, font=("Arial", 10))
         self.label_user_info.pack()
@@ -37,10 +34,18 @@ class SpecialWindow:
         self.label_datetime = tk.Label(self.info_frame, text="", font=("Arial", 10))
         self.label_datetime.pack(pady=(4, 0))
 
+        self.logout_image = tk.PhotoImage(file="specLogout.png")
+        self.logout_label = tk.Label(self.info_frame, width=140, height=40, image=self.logout_image)
+        self.logout_label.bind("<Button-1>", self.logout)
+        self.logout_label.pack(pady=(17, 8))
 
-        self.search_frame= tk.Frame(master, width=230, height=40)
-        self.search_frame.pack(pady=(30, 5))
-        self.search_frame.pack_propagate(False)
+
+        self.search = tk.Frame(master, width=230, height=23)
+        self.search.pack(pady=(20, 5))
+        self.search.pack_propagate(False)
+
+        self.search_frame = tk.Frame(self.search)
+        self.search_frame.pack()
 
         self.search_label = tk.Label(self.search_frame, text="Поиск:", font=("Arial", 12))
         self.search_label.pack(side=tk.LEFT)
@@ -50,10 +55,24 @@ class SpecialWindow:
 
         self.search_entry.bind("<KeyRelease>", self.search_tickets)
 
+        self.search_buttons = tk.Frame(master)
+        self.search_buttons.pack(anchor="center")
+
+        
+        self.search_button = tk.Button(self.search_buttons, text="В ожидании", command = self.wait_search)
+        self.search_button.pack(side=tk.LEFT)
+        self.search_button = tk.Button(self.search_buttons, text="В работе", command = self.work_search)
+        self.search_button.pack(side=tk.LEFT)
+        self.search_button = tk.Button(self.search_buttons, text="Выполнено", command = self.finaly_search)
+        self.search_button.pack(side=tk.LEFT)
+
+        self.search_button = tk.Button(master, text="Сброс", command = self.search_tickets, font=("Arial", 12))
+        self.search_button.pack(anchor="center", pady=(4, 0))
+
         self.label_ticket_info = tk.Label(master, text="")
         self.label_ticket_info.pack(pady=(10, 0))
 
-        self.canvas = tk.Canvas(master, width=240, height=390, highlightbackground="yellow", highlightcolor="yellow", highlightthickness=4)
+        self.canvas = tk.Canvas(master, width=240, height=490, highlightbackground="red", highlightcolor="red", highlightthickness=2)
         self.scrollbar = tk.Scrollbar(self.canvas, orient="vertical", command=self.canvas.yview)
         self.canvas.pack_propagate(False)
 
@@ -132,6 +151,21 @@ class SpecialWindow:
             self.display_search_results(tickets)
         else:
             self.update_ticket_info()
+
+    def wait_search(self):
+        search_query = "В ожидании"
+        tickets = self.db.search_tickets(search_query)
+        self.display_search_results(tickets)
+
+    def work_search(self):
+        search_query = "В работе"
+        tickets = self.db.search_tickets(search_query)
+        self.display_search_results(tickets)
+    
+    def finaly_search(self):
+        search_query = "Выполнено"
+        tickets = self.db.search_tickets(search_query)
+        self.display_search_results(tickets)
 
 
 

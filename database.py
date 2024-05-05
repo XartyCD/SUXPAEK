@@ -87,7 +87,7 @@ class Database:
         return self.cursor.fetchone()
 
     def search_tickets(self, query):
-        self.cursor.execute("SELECT * FROM tickets WHERE ticket_number LIKE ? OR client LIKE ? OR equipment LIKE ?", ('%' + query + '%', '%' + query + '%', '%' + query + '%'))
+        self.cursor.execute("SELECT * FROM tickets WHERE ticket_number LIKE ? OR client LIKE ? OR equipment LIKE ? OR status LIKE ?", ('%' + query + '%', '%' + query + '%', '%' + query + '%', '%' + query + '%'))
         return self.cursor.fetchall()
 
     def __del__(self):

@@ -7,8 +7,10 @@ class TicketEditStatusForm:
         self.db = db
         self.ticket_id = ticket_id
         self.parent_window = parent_window
+        
+        master.geometry("162x60+530+280")
+        master.resizable(False, False)
 
-        print(ticket_id)
         self.ticket_data = self.db.get_ticket_by_id(ticket_id)
 
         self.label_status = tk.Label(master, text="Статус:")
@@ -37,11 +39,7 @@ class TicketEditStatusForm:
             ticket_data['completion_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         self.db.update_ticket(self.ticket_id, ticket_data)
-        self.parent_window.update_tickets_display()
-        self.master.destroy()
-
-        self.db.update_ticket(self.ticket_id, ticket_data)
-        self.parent_window.update_tickets_display()  # Добавляем вызов метода обновления отображения заявок
+        self.parent_window.update_ticket_info()  # Добавляем вызов метода обновления отображения заявок
         self.master.destroy()
 
 

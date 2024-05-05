@@ -7,6 +7,9 @@ class TicketEditForm:
         self.db = db
         self.ticket_id = ticket_id
         self.parent_window = parent_window
+        
+        master.geometry("255x165+530+280")
+        master.resizable(False, False)
 
         self.ticket_data = self.db.get_ticket_by_id(ticket_id)
 
@@ -66,7 +69,10 @@ class TicketEditForm:
             "client": self.entry_client.get(),
             "status": self.status_var.get()
         }
-          #добавить удаление старой заявки и замену ее на новую (сейчас добавляется еще одна такая же заявка, но с изменениями, а прошлая остается)
+
+        if ticket_data['status'] == "Выполнено":
+            ticket_data['completion_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         self.db.update_ticket(self.ticket_id, ticket_data)
         self.parent_window.update_ticket_info()
         self.master.destroy()

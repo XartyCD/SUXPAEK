@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import datetime
+from datetime import datetime
 from collections import Counter
 
 def create_statistics_window(db):
@@ -30,12 +31,12 @@ def create_statistics_window(db):
     if tickets:
         for ticket in tickets:
             if ticket[6] == "Выполнено" and ticket[7] and ticket[8]:
-                creation_time = datetime.datetime.striplime(ticket[7], "%Y.%m.%d %H:%M:%S")
-                complection_time = datetime.datetime.striplime(ticket[8], "%Y.%m.%d %H:%M:%S")
+                creation_time = datetime.strptime(ticket[7], "%d.%m.%Y %H:%M:%S")
+                complection_time = datetime.strptime(ticket[8], "%Y-%m-%d %H:%M:%S")
                 execution_time = complection_time - creation_time
                 execution_time_str = str(execution_time)
             else:
-                execution_time_str = "Не указано"
+                execution_time_str = "Ещё не исполнено"
             tree_tickets.insert("", "end", text=ticket[1], values=tuple(ticket[1:])+(execution_time_str,))
 
     else:

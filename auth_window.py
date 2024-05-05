@@ -92,12 +92,11 @@ class AuthWindow:
 
     def open_special_window(self, username):
         special_window = tk.Toplevel(self.master)
-        special_window.title("Специальное окно для пользователя 2")
 
-        special_window_instance = SpecialWindow(special_window, username, self, Database)
+        special_window_instance = SpecialWindow(special_window, username, self, self.db)
 
         tickets = self.db.get_all_tickets()
-        special_window_instance.display_tickets(tickets)
+        special_window_instance.update_ticket_info()
 
     def update_datetime(self):
         current_datetime = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")

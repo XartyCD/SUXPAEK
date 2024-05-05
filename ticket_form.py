@@ -10,6 +10,10 @@ class TicketForm:
         self.label_ticket_number = tk.Label(master, text="Заявка №")
         self.label_ticket_number.grid(row=0, column=0, sticky="e")
 
+        master.geometry("252x165+530+280")
+        master.resizable(False, False) 
+
+
         self.entry_ticket_number = tk.Entry(master)
         self.entry_ticket_number.grid(row=0, column=1)
 
@@ -51,9 +55,7 @@ class TicketForm:
 
 
     def submit(self):
-
         created_at = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-        print(created_at)
         ticket_data = {
             "ticket_number": self.entry_ticket_number.get(),
             "equipment": self.entry_equipment.get(),
@@ -64,6 +66,9 @@ class TicketForm:
             "created_at": created_at
             
         }
+        if ticket_data['status'] == "Выполнено":
+            ticket_data['completion_date'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         self.db.insert_ticket(ticket_data)
         self.application_window.update_ticket_info()
         self.master.destroy()

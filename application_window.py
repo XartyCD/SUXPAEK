@@ -31,7 +31,7 @@ class ApplicationWindow:
         self.info_frame = tk.Frame(master, width=190, height=50, highlightbackground="#d46a06", highlightcolor="#d46a06", highlightthickness=4)
         self.info_frame.pack(padx=(0, 10), pady=(10, 0), side=tk.RIGHT, anchor="ne")
 
-        self.label_user_info = tk.Label(self.info_frame, text=f"Приветствуем, Товарищ 111111!", wraplength=240, font=("Arial", 10))
+        self.label_user_info = tk.Label(self.info_frame, text=f"Приветствуем, Товарищ {self.current_user}!", wraplength=240, font=("Arial", 10))
         self.label_user_info.pack()
 
         self.label_datetime = tk.Label(self.info_frame, text="", font=("Arial", 10))

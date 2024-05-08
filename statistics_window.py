@@ -5,6 +5,7 @@ from datetime import datetime
 from collections import Counter
 
 def create_statistics_window(db):
+    global completedCount
     statistics_window = tk.Toplevel()
     statistics_window.title("Статистика")
 
@@ -27,7 +28,6 @@ def create_statistics_window(db):
     tree_tickets.pack(expand=True, fill="both")
 
     tickets = db.get_all_tickets()
-
     if tickets:
         for ticket in tickets:
             if ticket[6] == "Выполнено" and ticket[7] and ticket[8]:
@@ -60,6 +60,7 @@ def create_statistics_window(db):
         for ticket in tickets:
             if ticket[6] == "Выполнено":
                 fault_type_counter[ticket[3]] += 1
+                completedCount = fault_type_counter[ticket[3]]
 
         row_num = 1
         for fault_type, count in fault_type_counter.items():
@@ -67,5 +68,6 @@ def create_statistics_window(db):
             row_num += 1
     else:
         tree_fault_types.insert("", "end", text="Нет данных", values=[""]*2)
+
 
         

@@ -14,6 +14,7 @@ class TicketForm:
         master.resizable(False, False) 
 
 
+
         self.entry_ticket_number = tk.Entry(master)
         self.entry_ticket_number.grid(row=0, column=1)
 

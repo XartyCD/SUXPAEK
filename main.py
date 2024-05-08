@@ -5,7 +5,7 @@ from tkinter import scrolledtext
 
 def play_background_music():
     pygame.init()
-    pygame.mixer.music.load('music.mp3')
+    pygame.mixer.music.load('0lvl.mp3')
     pygame.mixer.music.play(-1) # -1 означает, что музыка будет проигрываться бесконечно
 
 def main():
@@ -13,7 +13,6 @@ def main():
     root = tk.Tk()
 
     auth_window = AuthWindow(root)
-    root.iconbitmap(default="icon.ico")
     root.protocol("WM_DELETE_WINDOW", close_app) # Вызывает функцию close_app при закрытии окна
     play_background_music()
     root.mainloop()
